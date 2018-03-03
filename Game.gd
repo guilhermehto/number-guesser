@@ -2,6 +2,7 @@ extends Node
 
 
 onready var message = $Message
+onready var button_right = $Right
 
 var guess 
 var min_guessed = 0
@@ -41,15 +42,24 @@ func _try_guess(type):
 
 func _end_game():
 	ended = true
-	print("Yes! I knew it! Your number was: " + str(guess) + "!")
+	message.text = "Yes! I knew it! Your number was: " + str(guess) + "!"
+	button_right.text = "Restart"
 
 func _restart_game():
 	get_tree().reload_current_scene()
 
 
 
+func _on_Greater_pressed():
+	_try_guess("up")
+	
+
+func _on_Lesser_pressed():
+	_try_guess("down")
 
 
-
-
-
+func _on_Right_pressed():
+	if ended:
+		_restart_game()
+	else:
+		_end_game()
